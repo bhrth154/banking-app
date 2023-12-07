@@ -16,8 +16,13 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq",
             allocationSize = 1, initialValue = 1, schema = "online_bank")
     private long id;
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     private long phone;
+    @Column(name = "gender", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @Transient
+    private AccountType accountType;
 }
