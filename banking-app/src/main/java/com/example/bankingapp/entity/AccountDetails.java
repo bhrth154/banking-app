@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -25,8 +26,8 @@ public class AccountDetails {
     @CreationTimestamp
     private LocalDate date;
     @Column(name = "balance")
-    @ColumnDefault("0")
-    private Double balance;
+    @ColumnDefault("0.0")
+    private double balance;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

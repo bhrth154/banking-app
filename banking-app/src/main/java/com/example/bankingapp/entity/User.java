@@ -20,6 +20,4 @@ public class User {
     private String email;
     @Column(name = "phone")
     private long phone;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private AccountDetails accountDetails;
 }
