@@ -16,13 +16,26 @@ public class User {
     @SequenceGenerator(name = "user_seq", sequenceName = "user_seq",
             allocationSize = 1, initialValue = 1, schema = "online_bank")
     private long id;
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "age")
+    private int age;
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     private long phone;
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Transient
-    private AccountType accountType;
+
+    public User(String firstName, String lastName, int age, String email, long phone, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
+        this.gender = gender;
+    }
 }

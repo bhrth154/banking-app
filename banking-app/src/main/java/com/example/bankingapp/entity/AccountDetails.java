@@ -33,7 +33,7 @@ public class AccountDetails {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }
