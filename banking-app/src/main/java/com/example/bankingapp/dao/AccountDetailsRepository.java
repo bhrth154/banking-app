@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -18,5 +19,5 @@ public interface AccountDetailsRepository extends JpaRepository<AccountDetails, 
     @Query(value = "DELETE FROM AccountDetails a where a.user.id=:userId")
     void deleteByUserId(@Param("userId") long userId);
     @Query(value = "SELECT a FROM AccountDetails a where a.user.id=:userId")
-    AccountDetails findByUserId(@Param("userId") long userId);
+    Set<AccountDetails> findByUserId(@Param("userId") long userId);
 }

@@ -1,8 +1,6 @@
 package com.example.bankingapp.controller;
 
-import com.example.bankingapp.exceptions.NoUserExistsException;
-import com.example.bankingapp.exceptions.UserExistsException;
-import com.example.bankingapp.exceptions.UserNotFoundException;
+import com.example.bankingapp.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,7 +15,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class BankingAppExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException methodArgumentNotValidException) {
+    public ResponseEntity<ExceptionResponse> HandleException(MethodArgumentNotValidException methodArgumentNotValidException) {
         List<String> Errors = methodArgumentNotValidException.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -28,26 +26,50 @@ public class BankingAppExceptionHandler {
     }
 
     @ExceptionHandler(UserExistsException.class)
-    public ResponseEntity<ExceptionResponse> handleException(UserExistsException userExistsException) {
+    public ResponseEntity<ExceptionResponse> HandleException(UserExistsException userExistsException) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.BAD_REQUEST.value(),
                 userExistsException.getMessage(), System.currentTimeMillis()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleException(UserNotFoundException userNotFoundException) {
+    public ResponseEntity<ExceptionResponse> HandleException(UserNotFoundException userNotFoundException) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(),
                 userNotFoundException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler(NoUserExistsException.class)
-    public ResponseEntity<ExceptionResponse> handleException(NoUserExistsException noUserExistsException) {
+    public ResponseEntity<ExceptionResponse> HandleException(NoUserExistsException noUserExistsException) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(),
                 noUserExistsException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UnsufficientBalanceException.class)
+    public ResponseEntity<ExceptionResponse> HandleException(UnsufficientBalanceException unsufficientBalanceException) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                unsufficientBalanceException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(NoAccountExistsExecption.class)
+    public ResponseEntity<ExceptionResponse> HandleException(NoAccountExistsExecption noAccountExistsExecption) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(),
+                noAccountExistsExecption.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoAccountFoundException.class)
+    public ResponseEntity<ExceptionResponse> HandleException(NoAccountFoundException noAccountFoundException) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_FOUND.value(),
+                noAccountFoundException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UpdateRequestNullException.class)
+    public ResponseEntity<ExceptionResponse> HandleException(UpdateRequestNullException updateRequestNullException) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                updateRequestNullException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_ACCEPTABLE);
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception exception) {
+    public ResponseEntity<ExceptionResponse> HandleException(Exception exception) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 exception.getMessage(), System.currentTimeMillis()), HttpStatus.INTERNAL_SERVER_ERROR);
     }

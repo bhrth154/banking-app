@@ -1,15 +1,12 @@
 package com.example.bankingapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -33,7 +30,12 @@ public class AccountDetails {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    public AccountDetails(double balance, AccountType accountType) {
+        this.balance = balance;
+        this.accountType = accountType;
+    }
 }
