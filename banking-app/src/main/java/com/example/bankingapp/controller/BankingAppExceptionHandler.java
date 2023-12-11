@@ -68,6 +68,18 @@ public class BankingAppExceptionHandler {
                 updateRequestNullException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ExceptionResponse> HandleException(InsufficientBalanceException insufficientBalanceException) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                insufficientBalanceException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(SameAccountException.class)
+    public ResponseEntity<ExceptionResponse> HandleException(SameAccountException sameAccountException) {
+        return new ResponseEntity<>(new ExceptionResponse(HttpStatus.NOT_ACCEPTABLE.value(),
+                sameAccountException.getMessage(), System.currentTimeMillis()), HttpStatus.NOT_ACCEPTABLE);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> HandleException(Exception exception) {
         return new ResponseEntity<>(new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
